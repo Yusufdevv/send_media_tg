@@ -14,9 +14,6 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
-  // int selectedIndex = 0;
-  // final Completer<GoogleMapController> _controller =
-  //     Completer<GoogleMapController>();
 
   Future<void> _getCurrentLocation() async {
     try {
