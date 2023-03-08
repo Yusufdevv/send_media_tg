@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:send_media_to_tg/camera_bottomsheet.dart';
 import 'package:send_media_to_tg/map_page.dart';
+import 'package:send_media_to_tg/service.dart';
 import 'package:teledart/teledart.dart';
 import 'package:teledart/telegram.dart';
 
@@ -56,7 +57,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<String> imagePath = [];
   List<String> videPath = [];
-  LatLng manzil = const LatLng(0, 0);
+  LatLng latlng = const LatLng(0, 0);
+  String manzil = '';
   int val = 0;
   @override
   Widget build(BuildContext context) {
@@ -151,16 +153,17 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 20),
             Container(
               padding: const EdgeInsets.all(16),
-              height: 120,
+              height: 130,
               width: double.maxFinite,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: Colors.purple)),
               child: Column(
                 children: [
-                  Text(manzil.latitude == 0
-                      ? 'Manzil tanlanmagan'
-                      : '${manzil.latitude} ${manzil.longitude} '),
+                  Text(
+                    manzil.isEmpty ? 'Manzil tanlanmagan' : manzil,
+                    textAlign: TextAlign.center,
+                  ),
                   const Spacer(),
                   InkWell(
                     onTap: () async {
@@ -170,7 +173,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             builder: (context) => const MapPage(),
                           ));
                       if (address.isNotEmpty) {
-                        manzil = address.first ?? const LatLng(0, 0);
+                        latlng = address.first ?? const LatLng(0, 0);
+                        final adrs = await Serivece.getAddress(latlng);
+                        manzil = adrs;
                         setState(() {});
                       }
                     },
