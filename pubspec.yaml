@@ -39,7 +39,6 @@ dependencies:
   image_picker: ^0.8.6+4
   permission_handler: ^10.2.0
   teledart: ^0.5.4
-  location: ^4.4.0
   google_maps_flutter: ^2.2.5
 
 dev_dependencies:

@@ -167,13 +167,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   const Spacer(),
                   InkWell(
                     onTap: () async {
-                      List<LatLng?> address = await Navigator.push(
+                      final address = await Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const MapPage(),
                           ));
-                      if (address.isNotEmpty) {
-                        latlng = address.first ?? const LatLng(0, 0);
+                      if (address !=null) {
+                        latlng = address.first ??const LatLng(0, 0);
                         final adrs = await Serivece.getAddress(latlng);
                         manzil = adrs;
                         setState(() {});

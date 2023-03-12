@@ -1,8 +1,8 @@
-import 'dart:async';
+// import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
+// import 'package:location/location.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({
@@ -14,31 +14,30 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
+  // // Future<void> _getCurrentLocation() async {
+  // //   try {
+  // //     _currentLocation = await _location.getLocation();
+  // //   } catch (e) {
+  // //     _currentLocation = null;
+  // //   }
+  // //   if (_currentLocation != null) {
+  // //     latLng = LatLng(
+  // //         _currentLocation?.latitude ?? 0, _currentLocation?.longitude ?? 0);
+  // //     _mapController.animateCamera(
+  // //       CameraUpdate.newCameraPosition(
+  // //         CameraPosition(
+  // //           target: LatLng(_currentLocation?.latitude ?? 0,
+  // //               _currentLocation?.longitude ?? 0),
+  // //           zoom: 15,
+  // //         ),
+  // //       ),
+  // //     );
+  // //   }
+  // }
 
-  Future<void> _getCurrentLocation() async {
-    try {
-      _currentLocation = await _location.getLocation();
-    } catch (e) {
-      _currentLocation = null;
-    }
-    if (_currentLocation != null) {
-      latLng = LatLng(
-          _currentLocation?.latitude ?? 0, _currentLocation?.longitude ?? 0);
-      _mapController.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            target: LatLng(_currentLocation?.latitude ?? 0,
-                _currentLocation?.longitude ?? 0),
-            zoom: 15,
-          ),
-        ),
-      );
-    }
-  }
-
-  late GoogleMapController _mapController;
-  final Location _location = Location();
-  LocationData? _currentLocation;
+  // late GoogleMapController _mapController;
+  // final Location _location = Location();
+  // LocationData? _currentLocation;
   LatLng? latLng;
   Marker? marker;
   @override
@@ -55,8 +54,7 @@ class _MapPageState extends State<MapPage> {
               zoom: 11,
             ),
             onMapCreated: (GoogleMapController controller) {
-              _mapController = controller;
-              _getCurrentLocation();
+              controller = controller;
             },
             onTap: (argument) {
               latLng = argument;
@@ -79,7 +77,15 @@ class _MapPageState extends State<MapPage> {
             left: 0,
             child: InkWell(
               onTap: () {
-                Navigator.pop(context, [latLng]);
+                if (latLng == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    duration: Duration(seconds: 2),
+                    content: Text(
+                        "Hali manzil tanlamidiz, xaritadan manzilingizni tanlang"),
+                  ));
+                } else {
+                  Navigator.pop(context, [latLng]);
+                }
               },
               child: Container(
                 height: 44,
